@@ -1,0 +1,56 @@
+<div class="signup-panel">
+  <h2>Sign up</h2>
+  <form (ngSubmit)="signupForm.form.valid && onSignUp()" #signupForm="ngForm" class="signup-form" novalidate name="form">
+    <table>
+      <colgroup>
+        <col span="1">
+        <col span="1">
+      </colgroup>
+      <tr class="signup-form__tr">
+        <td>
+          <label for="id" class="signup-form__label required">ID</label>
+        </td>
+        <td>
+          <input class="form__input" type="text" [(ngModel)]="signUp.id" #id="ngModel" name="id" [ngClass]="{ 'form__input-invalid': signupForm.submitted && id.invalid }"
+            required>
+          <div *ngIf="signupForm.submitted && id.invalid" class="invalid-feedback">
+            <div *ngIf="id.errors.required"> ID is required</div>
+          </div>
+        </td>
+      </tr>
+      <tr class="signup-form__tr">
+        <td>
+          <label for="firstName" class="signup-form__label required">First Name</label>
+        </td>
+        <td>
+          <input class="form__input" type="text" [(ngModel)]="signUp.firstName" #firstName="ngModel" name="firstName" [ngClass]="{ 'form__input-invalid': signupForm.submitted && firstName.invalid }"
+            required>
+          <div *ngIf="signupForm.submitted && firstName.invalid" class="invalid-feedback">
+            <div *ngIf="firstName.errors.required">First Name is required</div>
+          </div>
+        </td>
+      </tr>
+      <tr class="signup-form__tr">
+        <td>
+          <label for="surname" class="signup-form__label required"> Surname </label>
+        </td>
+        <td>
+          <input class="form__input" type="text" [(ngModel)]="signUp.surname" #surname="ngModel" name="surname" [ngClass]="{ 'form__input-invalid': signupForm.submitted && surname.invalid }"
+            required>
+          <div *ngIf="signupForm.submitted && surname.invalid" class="invalid-feedback">
+            <div *ngIf="surname.errors.required"> Surname is required</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <button type="submit" class="signup-form__submit-button">
+      <div *ngIf="!signUpInProgress">
+        <span>Sign up</span>
+      </div>
+      <div *ngIf="signUpInProgress">
+        <div class="loader16">
+        </div>
+      </div>
+    </button>
+  </form>
+</div>

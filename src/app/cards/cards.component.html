@@ -1,0 +1,21 @@
+<ul class="list-of-cards">
+  <li *ngFor="let card of userService.cards" class="list-of-cards__card" [class.list-of-cards__card--default]="card.default" (click)="bindUserCard(card)" >
+    <div class="card__name">{{ card.name.split("@")[0] }}</div>
+    <div class="card__fullname"><a class="card__fullname__link" href="/api/wallet/{{card.name}}/export">{{ card.name }}</a></div>
+    <div *ngIf="card.default" class="card__status"> Default </div>
+    <div *ngIf="!card.default" class="card__status"> &nbsp; </div>
+  </li>
+  <li class="list-of-cards__card list-of-cards__card--wild">
+    <a class="list-of-cards__signup-wrap" [routerLink]="['/SignUp']" title="sign up new identity">
+      <div class="card__name"> new </div>
+    </a>
+  </li>
+  <li class="list-of-cards__import" title="import existing card">
+      <div class="card__add-icon" > + </div>
+  </li>
+</ul>
+
+<p>
+  cards works!
+</p>
+asdffgag

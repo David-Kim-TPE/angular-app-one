@@ -1,0 +1,89 @@
+.list-of-cards{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.list-of-cards__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 5px 8px 5px rgb(0,0,0,0.2);
+    height: 250px;
+    min-width: 220px;
+}
+
+.list-of-cards__card:hover {
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
+.list-of-cards__card--wild {
+    background-color: #DDD;
+    border: 0px;   
+}
+
+.list-of-cards__import {
+    width: 100px;
+    height: 100px;
+    border: 0px solid black;
+    border-radius: 50%;
+    vertical-align: middle;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    margin: 50px;
+    background-color: #ddd;
+    text-align:center;
+}
+
+.list-of-cards__import:hover {
+    background-color: antiquewhite;
+    cursor: pointer;
+    color: orange;
+}
+
+.list-of-cards__signup-wrap {
+    text-decoration: none;
+    text-align: center;
+}
+
+.card__add-icon {
+    font-family: monospace;
+    font-size: 60px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+    color: #999;
+}
+
+
+.list-of-cards__card--default {
+    border-color: orange;
+}
+
+
+.card__name {
+    font-size: 16px;
+    font-family: monospace;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.card__fullname {
+    margin: 20px;
+}
+
+.card__fullname__link {
+    font-size: 10px;
+}
+
+.card__status {
+    color: darkgray;
+}
