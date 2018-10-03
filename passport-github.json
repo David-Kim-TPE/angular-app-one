@@ -1,0 +1,12 @@
+{
+    "github": {
+        "provider": "github",
+        "module": "passport-github",
+        "clientID": "a5063501faf523abbeb9",
+        "clientSecret": "{clientSecret}",
+        "authPath": "/auth/github",
+        "callbackURL": "/auth/github/callback",
+        "successRedirect": "http://localhost:4200?loggedIn=true",
+        "failureRedirect": "/"
+    }
+}
