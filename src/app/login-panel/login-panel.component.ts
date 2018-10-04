@@ -27,11 +27,12 @@ export class LoginPanelComponent implements OnInit {
 
         if (this.userService.accessTokenExists) {
           console.log('accessTokenExists: ', this.userService.accessTokenExists);
-          if (routePath === 'SignUp') {
-            return;
-          }
+
           if (!this.userService.currentUser) {
             this.userService.checkWallet().then(() => {
+              if (routePath === 'SignUp') {
+                return;
+              }
               if (!this.userService.currentUser) {
                 if (routePath !== 'Cards') {
                   return this.router.navigate(['Cards'], { queryParams: { returnUrl: routePath } });
@@ -46,5 +47,5 @@ export class LoginPanelComponent implements OnInit {
   onSignUp() {
     console.log('onSignUp');
   }
-  
+
 }

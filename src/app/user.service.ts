@@ -55,7 +55,7 @@ export class UserService {
   }
 
   // Create Participant and create identities, beware of the "Card" section.
-  signUp(data) {
+  signUp(data, callback = null) {
     const participantUser = {
       $class: 'org.example.basic.SampleParticipant',
       'participantId': data.id,
@@ -72,9 +72,18 @@ export class UserService {
           options: {}
         };
         console.log('participant %1 created ', data.id);
-        return this.httpClient.post('http://localhost:3001/api/system/identities/issue', identity, { responseType: 'blob' }).toPromise();
+        console.log('then 1');
+        return this.httpClient.post('http://localhost:3001/api/system/identities/issue', identity, { responseType: 'blob' })
+          .toPromise();
       })
-      .then(this.importCard)
+      .then((cardData: Blob) => {
+        console.log('then 2');
+        return this.importCard(cardData);
+      })
+      .then(() => {
+        console.log('then 4');
+        return callback();
+      })
       .catch((error: HttpErrorResponse) => this.handleError(error));
   }
 
@@ -87,12 +96,15 @@ export class UserService {
 
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'multipart/form-data');
+    console.log('this', this);
     return this.httpClient.post('/api/wallet/import', formData, {
       withCredentials: true,
       headers
-    })
-    .toPromise()
-    .catch((error: HttpErrorResponse) => this.handleError(error));
+    }).toPromise()
+      .then((res) => {
+        console.log('card imported: ', res);
+        return this.checkWallet();
+      });
   }
 
   // Get Current User using /api/system/ping
@@ -134,7 +146,7 @@ export class UserService {
   }
 
   // Handles Error
-  private handleError(error: HttpErrorResponse|any): Observable<string> {
+  private handleError(error: HttpErrorResponse | any): Observable<string> {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     const errMsg = (error.message) ? error.message :

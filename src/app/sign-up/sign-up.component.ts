@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from '../user.service';
 import {
   FormGroup,
@@ -25,6 +26,7 @@ export class SignUpComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private formBuilder: FormBuilder
   ) { }
@@ -37,44 +39,14 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  checkWallet() {
-    console.log('checkWalet()');
-    return this.userService.checkWallet()
-      .then((results) => {
-        console.log('checkWallet() results: ', results);
-        if (results['length'] > 0) {
-          // this.loggedIn = true;
-          const cardName = results[0].name;
-          console.log('cardName: ' + cardName);
-          return this.getCurrentUser();
-        }
-      })
-      .catch(error => {
-        // this.loggedIn = false;
-        console.log('checkWalet()');
-        // console.log('this.loggedIn: ' + this.loggedIn);
-        // console.log('this.authenticated: ' + this.authenticated);
-        console.log('error: ' + error);
-      }
-      );
-  }
-
   onSignUp() {
     this.signUpInProgress = true;
-    return this.userService.signUp(this.signUp)
-      .then(() => {
-        this.signUpInProgress = false;
-        return this.getCurrentUser();
-      });
+    return this.userService.signUp(this.signUp, () => {
+      this.signUpInProgress = false;
+      return this.router.navigate(['Cards']);
+    });
   }
 
-  getCurrentUser() {
-    return this.userService.getCurrentUser()
-      .then((currentUser) => {
-        console.log('getCurrentUser(): ', currentUser);
-        this.userService.currentUser = currentUser;
-      });
-  }
   /*
     getUserCard(cardName) {
       return this.userService.getUserCard(cardName)

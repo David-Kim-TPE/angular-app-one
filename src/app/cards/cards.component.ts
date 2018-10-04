@@ -38,11 +38,7 @@ export class CardsComponent implements OnInit {
   importFileChanged(event) {
     const file = event.target.files[0];
     if (file) {
-
-      this.userService.importCard(file).then(() => {
-        console.log('done');
-        this.userService.checkWallet();
-      });
+      this.userService.importCard(file);
     }
   }
 

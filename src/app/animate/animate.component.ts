@@ -14,6 +14,7 @@ export class AnimateComponent implements OnInit {
   constructor(private animateService: AnimateService) { }
 
   ngOnInit() {
+
   }
 
 
