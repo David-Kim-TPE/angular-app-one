@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
         // console.log('this.authenticated: ' + this.authenticated);
         console.log('error: ' + error);
       }
-    );
+      );
   }
 
   onSignUp() {
@@ -75,18 +75,18 @@ export class SignUpComponent implements OnInit {
         this.userService.currentUser = currentUser;
       });
   }
-/*
-  getUserCard(cardName) {
-    return this.userService.getUserCard(cardName)
-      .then((cardUrl) => {
-        console.log('cardUrl: ' + cardUrl);
-        //this.cardUrl = cardUrl;
-      });
-  }
-
-  getCurrentUserAndCard(walletName) {
-    this.getCurrentUser();
-    this.getUserCard(walletName);
-  }
-  */
+  /*
+    getUserCard(cardName) {
+      return this.userService.getUserCard(cardName)
+        .then((cardUrl) => {
+          console.log('cardUrl: ' + cardUrl);
+          //this.cardUrl = cardUrl;
+        });
+    }
+  
+    getCurrentUserAndCard(walletName) {
+      this.getCurrentUser();
+      this.getUserCard(walletName);
+    }
+    */
 }

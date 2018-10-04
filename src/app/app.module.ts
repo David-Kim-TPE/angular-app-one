@@ -32,6 +32,8 @@ import { LoginPanelComponent } from './login-panel/login-panel.component';
 import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CardsComponent } from './cards/cards.component';
+import { AnimateComponent } from './animate/animate.component';
+import { AnimateService } from './animate/animate.service';
 
   @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { CardsComponent } from './cards/cards.component';
     SampleTransactionComponent,
     SignUpComponent,
     LoginPanelComponent,
-    CardsComponent
+    CardsComponent,
+    AnimateComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { CardsComponent } from './cards/cards.component';
   providers: [
     DataService,
     CookieService,
-    UserService
+    UserService,
+    AnimateService
   ],
   bootstrap: [AppComponent]
 })

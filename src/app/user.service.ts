@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { CookieService } from 'ngx-cookie-service';
+import { AnimateService } from './animate/animate.service';
 
 
 @Injectable()
@@ -16,29 +18,38 @@ export class UserService {
   cardExists: boolean;
   currentUserName: string;
   cards: any;
+  //logoutEvent = new EventEmitter<any>();
 
-  constructor(private httpClient: HttpClient, private http: Http) { }
+  constructor(
+    private cookieService: CookieService,
+    private httpClient: HttpClient,
+    private http: Http,
+    private animateService: AnimateService) { }
+
+  checkAccessToken() {
+    // check access_token
+    return this.accessTokenExists = this.cookieService.check('access_token');
+  }
+
+  clearCookie() {
+    return this.cookieService.deleteAll();
+  }
 
   // Get Wallet from API with Credentials
   checkWallet() {
-    return this.httpClient.get('/api/wallet', { withCredentials: true })
-      .catch(this.handleError)
-      .toPromise().then((results) => {
+    return this.httpClient.get('/api/wallet', { withCredentials: true, responseType: 'json' })
+      .toPromise()
+      .then((results) => {
         this.cards = results;
         console.log('checkWallet() results: ', results);
         if (results['length'] > 0) {
-          // this.loggedIn = true;
           this.cardExists = true;
           const cardName = results[0].name;
           console.log('cardName: ' + cardName);
-          // console.log('this.loggedIn: ' + this.loggedIn);
-
-          // return this.getCurrentUserAndCard(cardName);
           return this.getCurrentUser();
-
         }
       })
-      .catch(error => {
+      .catch((error: HttpErrorResponse) => {
         this.handleError(error);
       });
   }
@@ -52,7 +63,8 @@ export class UserService {
       'lastName': data.surname
     };
 
-    return this.httpClient.post('http://localhost:3001/api/SampleParticipant', participantUser).toPromise()
+    return this.httpClient.post('http://localhost:3001/api/SampleParticipant', participantUser)
+      .toPromise()
       .then(() => {
         const identity = {
           participant: 'org.example.basic.SampleParticipant#' + data.id,
@@ -62,20 +74,25 @@ export class UserService {
         console.log('participant %1 created ', data.id);
         return this.httpClient.post('http://localhost:3001/api/system/identities/issue', identity, { responseType: 'blob' }).toPromise();
       })
-      .then((cardData: Blob) => {
-        console.log('CARD-DATA', cardData);
-        const file = new File([cardData], 'myCard.card', { type: 'application/octet-stream', lastModified: Date.now() });
+      .then(this.importCard)
+      .catch((error: HttpErrorResponse) => this.handleError(error));
+  }
 
-        const formData = new FormData();
-        formData.append('card', file);
+  importCard(cardData: Blob) {
+    console.log('CARD-DATA', cardData);
+    const file = new File([cardData], 'myCard.card', { type: 'application/octet-stream', lastModified: Date.now() });
 
-        const headers = new HttpHeaders();
-        headers.set('Content-Type', 'multipart/form-data');
-        return this.httpClient.post('/api/wallet/import', formData, {
-          withCredentials: true,
-          headers
-        }).toPromise();
-      });
+    const formData = new FormData();
+    formData.append('card', file);
+
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'multipart/form-data');
+    return this.httpClient.post('/api/wallet/import', formData, {
+      withCredentials: true,
+      headers
+    })
+    .toPromise()
+    .catch((error: HttpErrorResponse) => this.handleError(error));
   }
 
   // Get Current User using /api/system/ping
@@ -89,7 +106,8 @@ export class UserService {
         console.log(currentUser.split('#'));
         this.currentUserName = currentUser.split('#').pop();
         return currentUser;
-      });
+      })
+      .catch((error: HttpErrorResponse) => this.handleError(error));
   }
 
   // Get User Card by calling /api/wallet/{cardName}/export
@@ -99,7 +117,8 @@ export class UserService {
       .then((result: Blob) => {
         console.log('getUserCard() result:', result);
         return result;
-      });
+      })
+      .catch((error: HttpErrorResponse) => this.handleError(error));
   }
 
   bindUserCard(cardName) {
@@ -110,16 +129,29 @@ export class UserService {
       .toPromise()
       .then((res) => {
         console.log('res: ', res);
-      });
+      })
+      .catch((error: HttpErrorResponse) => this.handleError(error));
   }
 
   // Handles Error
-  private handleError(error: any): Observable<string> {
+  private handleError(error: HttpErrorResponse|any): Observable<string> {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
+
+    if (error.status === 401) {
+      this.logout('Authorization failed, logging out...');
+    }
     return Observable.throw(errMsg);
+  }
+
+  logout(msg: string = null): void {
+    let logoutMsg = 'logging out...';
+    if (msg) { logoutMsg = msg; }
+    this.animateService.toggle(1, logoutMsg);
+    this.clearCookie();
+    window.location.href = 'http://localhost:3000/auth/logout';
   }
 }
