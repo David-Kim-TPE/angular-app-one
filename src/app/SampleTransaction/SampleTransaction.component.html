@@ -23,52 +23,52 @@
         <div class="modal-body">
 
 
-          
 
-            
-              <div class="form-group text-left">
-                <label for="asset">asset</label>
-                
-                    <textarea formControlName="asset" class="form-control" rows="3"></textarea>
-                
-              </div>
-            
-          
 
-            
-              <div class="form-group text-left">
-                <label for="newValue">newValue</label>
-                
-                  <input formControlName="newValue" type="text" class="form-control">
-                
-              </div>
-            
-          
 
-            
-          
+          <div class="form-group text-left">
+            <label for="asset">asset</label>
 
-            
-          
+            <textarea formControlName="asset" class="form-control" rows="3"></textarea>
+
+          </div>
+
+
+
+
+          <div class="form-group text-left">
+            <label for="newValue">newValue</label>
+
+            <input formControlName="newValue" type="text" class="form-control">
+
+          </div>
+
+
+
+
+
+
+
+
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button (click)="addTransaction(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button (click)="addTransaction(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div class="container col-md-6">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-        <strong>Error:</strong> {{errorMessage}}
-    </div>
+<div class="container">
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    <strong>Error:</strong> {{errorMessage}}
+  </div>
 
   <div class="row">
     <div class="col-md-12">
-        <h1 class="transaction-title" id='transactionName'>SampleTransaction</h1>
+      <h1 class="transaction-title" id='transactionName'>SampleTransaction</h1>
     </div>
   </div>
   <br>
@@ -79,19 +79,19 @@
           When invoked, this transaction will have the following attributes:
           <br>
           <ul>
-            
-              
-                <li><span class="attribute"><b>asset</b></span></li>
-              
-            
-              
-                <li><span class="attribute"><b>newValue</b></span></li>
-              
-            
-              
-            
-              
-            
+
+
+            <li><span class="attribute"><b>asset</b></span></li>
+
+
+
+            <li><span class="attribute"><b>newValue</b></span></li>
+
+
+
+
+
+
           </ul>
         </div>
       </div>
@@ -99,4 +99,3 @@
     </div>
   </div>
 </div>
-

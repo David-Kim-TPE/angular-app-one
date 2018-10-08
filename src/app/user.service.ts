@@ -18,7 +18,6 @@ export class UserService {
   cardExists: boolean;
   currentUserName: string;
   cards: any;
-  //logoutEvent = new EventEmitter<any>();
 
   constructor(
     private cookieService: CookieService,
@@ -39,7 +38,7 @@ export class UserService {
   checkWallet() {
     return this.httpClient.get('/api/wallet', { withCredentials: true, responseType: 'json' })
       .toPromise()
-      .then((results) => {
+      .then(results => {
         this.cards = results;
         console.log('checkWallet() results: ', results);
         if (results['length'] > 0) {
@@ -65,7 +64,7 @@ export class UserService {
 
     return this.httpClient.post('http://localhost:3001/api/SampleParticipant', participantUser)
       .toPromise()
-      .then(() => {
+      .then(res => {
         const identity = {
           participant: 'org.example.basic.SampleParticipant#' + data.id,
           userID: data.id,
@@ -80,7 +79,7 @@ export class UserService {
         console.log('then 2');
         return this.importCard(cardData);
       })
-      .then(() => {
+      .then(res => {
         console.log('then 4');
         return callback();
       })
@@ -100,18 +99,20 @@ export class UserService {
     return this.httpClient.post('/api/wallet/import', formData, {
       withCredentials: true,
       headers
-    }).toPromise()
-      .then((res) => {
-        console.log('card imported: ', res);
-        return this.checkWallet();
-      });
+    })
+    .toPromise()
+    .then(res => {
+      console.log('then 3');
+      console.log('card imported: ', res);
+      return this.checkWallet();
+    });
   }
 
   // Get Current User using /api/system/ping
   getCurrentUser() {
     return this.httpClient.get('/api/system/ping', { withCredentials: true })
       .toPromise()
-      .then((data) => {
+      .then(data => {
         const currentUser = data['participant'];
         console.log('getCurrentUser(): ', currentUser);
         this.currentUser = currentUser;
@@ -139,7 +140,7 @@ export class UserService {
     };
     return this.httpClient.post('/api/wallet/' + cardName + '/setDefault', params, { withCredentials: true })
       .toPromise()
-      .then((res) => {
+      .then(res => {
         console.log('res: ', res);
       })
       .catch((error: HttpErrorResponse) => this.handleError(error));

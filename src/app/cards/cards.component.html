@@ -1,5 +1,6 @@
 <ul class="list-of-cards">
-  <li *ngFor="let card of userService.cards" class="list-of-cards__card" [class.list-of-cards__card--default]="card.default" (click)="bindUserCard(card)" >
+  <li *ngFor="let card of userService.cards" class="list-of-cards__card" [class.list-of-cards__card--default]="card.default"
+    (click)="bindUserCard(card)">
     <div class="card__name">{{ card.name.split("@")[0] }}</div>
     <div class="card__fullname"><a class="card__fullname__link" href="/api/wallet/{{card.name}}/export">{{ card.name }}</a></div>
     <div *ngIf="card.default" class="card__status"> Default </div>
@@ -9,7 +10,7 @@
     <div class="card__name"> new </div>
   </li>
   <li class="list-of-cards__import" title="import existing card" (click)="importFile.value=''; importFile.click();">
-      <div class="card__add-icon" > + </div>
-      <input type="file" class="hidden" #importFile (change)="importFileChanged($event)" />
+    <div class="card__add-icon"> + </div>
+    <input type="file" class="hidden" #importFile (change)="importFileChanged($event)" />
   </li>
 </ul>

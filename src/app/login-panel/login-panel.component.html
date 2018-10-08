@@ -1,13 +1,14 @@
 <div class="top-bar">
-  <section>
-      <a class="top-bar__user" [routerLink]="['/Cards']">{{userService.currentUserName}}</a>
-  </section>
   
+  <section>
+    <a class="top-bar__user" [routerLink]="['/Cards']">{{userService.currentUserName}}</a>
+  </section>
+
   <section *ngIf="!this.userService.accessTokenExists">
     <a class="auth-item__github auth-item__button" href="http://localhost:3000/auth/github">Github</a>
     <a class="auth-item__google auth-item__button" href="http://localhost:3000/auth/google">Google</a>
   </section>
   <section *ngIf="this.userService.accessTokenExists">
-      <a class="auth-item__logout auth-item__button" (click)="userService.logout()">Log out</a>
+    <a class="auth-item__logout auth-item__button" (click)="userService.logout()">Log out</a>
   </section>
 </div>

@@ -46,19 +46,4 @@ export class SignUpComponent implements OnInit {
       return this.router.navigate(['Cards']);
     });
   }
-
-  /*
-    getUserCard(cardName) {
-      return this.userService.getUserCard(cardName)
-        .then((cardUrl) => {
-          console.log('cardUrl: ' + cardUrl);
-          //this.cardUrl = cardUrl;
-        });
-    }
-  
-    getCurrentUserAndCard(walletName) {
-      this.getCurrentUser();
-      this.getUserCard(walletName);
-    }
-    */
 }

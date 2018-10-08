@@ -14,38 +14,40 @@
 <app-animate></app-animate>
 <app-login-panel></app-login-panel>
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <p class="network-name">my-basic-sample-network@0.0.1.bna</p>
-        <p class="navbar-brand">angular-app</p>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="dropdown active">
-            <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
-            <ul class="dropdown-menu scrollable-menu">
-              
-              <li><a [routerLink]="['/SampleAsset']">SampleAsset</a></li>
-              
-            </ul>
-        </li>
-        <li class="dropdown active">
-          <a class="dropdown-toggle" data-toggle="dropdown">Participants</a>
-          <ul class="dropdown-menu scrollable-menu">
-            
-            <li><a [routerLink]="['/SampleParticipant']">SampleParticipant</a></li>
-            
-          </ul>
+  <div class="container-fluid">
+
+    <ul class="nav navbar-nav">
+      <li class="dropdown active">
+        <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
+        <ul class="dropdown-menu scrollable-menu">
+
+          <li><a [routerLink]="['/SampleAsset']">SampleAsset</a></li>
+
+        </ul>
+      </li>
+      <li class="dropdown active">
+        <a class="dropdown-toggle" data-toggle="dropdown">Participants</a>
+        <ul class="dropdown-menu scrollable-menu">
+
+          <li><a [routerLink]="['/SampleParticipant']">SampleParticipant</a></li>
+
+        </ul>
       </li>
       <li class="dropdown active">
         <a class="dropdown-toggle" data-toggle="dropdown">Transactions</a>
         <ul class="dropdown-menu scrollable-menu">
-          
+
           <li><a [routerLink]="['/SampleTransaction']">SampleTransaction</a></li>
-          
+
         </ul>
-    </li>
-      </ul>
-    </div>
-  </nav>
-  
-  <router-outlet></router-outlet>
+      </li>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+<footer class="footer">
+  <span class="navbar-brand">angular-app</span>
+  <span class="network-name">my-basic-sample-network@0.0.1.bna</span>
+  <span class="creator">david.kim@acer.com</span>
+
+</footer>

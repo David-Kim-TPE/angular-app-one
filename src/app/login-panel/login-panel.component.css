@@ -30,6 +30,7 @@
     text-align: center;
     display: inline-block;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .auth-item__github {
